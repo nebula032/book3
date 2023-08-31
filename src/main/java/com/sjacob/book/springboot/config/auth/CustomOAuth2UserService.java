@@ -1,6 +1,7 @@
 package com.sjacob.book.springboot.config.auth;
 
 import com.sjacob.book.springboot.config.auth.dto.OAuthAttributes;
+import com.sjacob.book.springboot.config.auth.dto.SessionUser;
 import com.sjacob.book.springboot.domain.user.User;
 import com.sjacob.book.springboot.domain.user.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -25,12 +26,10 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
-        OAuth2UserService<OAuth2UserRequest, OAuth2User> delegate = new DefaultOAuth2UserService();
+        OAuth2UserService delegate = new DefaultOAuth2UserService();
         OAuth2User oAuth2User = delegate.loadUser(userRequest);
 
-        String registrationId = userRequest
-                .getClientRegistration().getRegistrationId();
-
+        String registrationId = userRequest.getClientRegistration().getRegistrationId();
         String userNameAttributeName = userRequest.getClientRegistration().getProviderDetails()
                 .getUserInfoEndpoint().getUserNameAttributeName();
 
